@@ -1,0 +1,117 @@
+@page "/localize/languages"
+
+<PageTitle>Languages</PageTitle>
+
+<PageHeader Title="Languages" Icon="globe" Description="Cultures visitors can switch to. Strings for a culture are edited from its row.">
+    <Actions>
+        <button type="button" class="nf-button nf-button-primary" @onclick="NewLanguage" disabled="@busy">New language</button>
+        <button type="button" class="nf-button" @onclick="ResetAsync" disabled="@busy">Reset strings</button>
+    </Actions>
+</PageHeader>
+
+@if (loading)
+{
+    <p class="nf-muted">Loading.</p>
+}
+else if (denied)
+{
+    <EmptyState Icon="alert" Title="You can't manage languages" Description="Sign in with a role that is allowed to edit them." />
+}
+else if (loadError is not null)
+{
+    <EmptyState Icon="alert" Title="The languages could not be read" Description="@loadError" />
+}
+else
+{
+    <div class="nf-field">
+        <label for="pack-culture">Import a language pack</label>
+        <div class="nf-chip-row">
+            <input id="pack-culture" class="nf-input" style="max-width: 12rem" placeholder="fr-FR if the file doesn't say" @bind="importCulture" @bind:event="oninput" />
+            <InputFile OnChange="ImportAsync" accept=".json,application/json" class="nf-input" disabled="@busy" />
+        </div>
+        <span class="nf-hint">JSON object, or a file with cultureCode and localizedStrings. A new culture is added switched off.</span>
+    </div>
+
+    @if (languages.Count == 0)
+    {
+        <EmptyState Icon="globe" Title="No languages yet">
+            <p>Add the cultures this site speaks.</p>
+            <button type="button" class="nf-button nf-button-primary" @onclick="NewLanguage">New language</button>
+        </EmptyState>
+    }
+    else
+    {
+        <Table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Culture</th>
+                    <th>Order</th>
+                    <th>Direction</th>
+                    <th>State</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var language in languages)
+                {
+                    <tr>
+                        <td>@language.Name</td>
+                        <td class="nf-mono">@language.CultureCode</td>
+                        <td>@language.SortOrder</td>
+                        <td>@(language.IsRightToLeft ? "Right to left" : "Left to right")</td>
+                        <td>
+                            @if (language.IsEnabled)
+                            {
+                                <Chip Selected="true">Enabled</Chip>
+                            }
+                            else
+                            {
+                                <Chip>Off</Chip>
+                            }
+                        </td>
+                        <td>
+                            <a class="nf-button" href="@LocalizeRoutes.StringsFor(language.CultureCode)">Strings</a>
+                            <button type="button" class="nf-button" @onclick="() => Edit(language)">Edit</button>
+                            <button type="button" class="nf-button nf-button-danger" @onclick="() => DeleteAsync(language)" disabled="@busy">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </Table>
+    }
+}
+
+@if (editing)
+{
+    <Drawer Title="@(form.Id == 0 ? "New language" : "Edit language")" Open="true" Scrim="true" OnClose="CloseEditor" Width="28rem">
+        <Actions>
+            <button type="submit" form="language-form" class="nf-button nf-button-primary" disabled="@busy">Save</button>
+        </Actions>
+        <ChildContent>
+        <EditForm id="language-form" Model="form" OnValidSubmit="SaveAsync">
+            @if (!string.IsNullOrWhiteSpace(error))
+            {
+                <p class="nf-validation">@error</p>
+            }
+            <Field Label="Culture code" For="culture">
+                <InputText id="culture" class="nf-input" @bind-Value="form.CultureCode" placeholder="fr-FR" disabled="@(form.Id != 0)" />
+                <span class="nf-hint">A .NET culture code, such as en-US or ar.</span>
+            </Field>
+            <Field Label="Name" For="name">
+                <InputText id="name" class="nf-input" @bind-Value="form.Name" placeholder="French" />
+            </Field>
+            <Field Label="Sort order" For="order">
+                <InputNumber id="order" class="nf-input" @bind-Value="form.SortOrder" />
+            </Field>
+            <Field Label="Right to left" For="rtl">
+                <InputCheckbox id="rtl" @bind-Value="form.IsRightToLeft" />
+            </Field>
+            <Field Label="Enabled" For="enabled">
+                <InputCheckbox id="enabled" @bind-Value="form.IsEnabled" />
+                <span class="nf-hint">Only enabled languages appear in the switcher.</span>
+            </Field>
+        </EditForm>
+        </ChildContent>
+    </Drawer>
+}

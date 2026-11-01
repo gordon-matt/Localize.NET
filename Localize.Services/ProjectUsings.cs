@@ -1,0 +1,15 @@
+global using System.Collections.Concurrent;
+global using System.Globalization;
+global using Ardalis.Result;
+global using Localize;
+global using Extenso.Data.Entity;
+global using Heroicsoft.NetForge.Results;
+global using Localize.Data;
+global using Localize.Data.Entities;
+global using Localize.Models;
+global using Localize.Sources;
+global using Localize.Tracking;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;

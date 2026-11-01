@@ -1,0 +1,6 @@
+@using Localize.Components.Pages
+
+<ForgeRouter AppAssembly="typeof(Program).Assembly"
+             AdditionalAssemblies="@(new[] { typeof(Languages).Assembly })"
+             NotFoundPage="typeof(Pages.NotFound)"
+             DefaultLayout="typeof(ShellLayout)" />

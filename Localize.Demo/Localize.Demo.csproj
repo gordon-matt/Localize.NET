@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<IsPackable>false</IsPackable>
+		<RequiresAspNetWebAssets>true</RequiresAspNetWebAssets>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Heroicsoft.NetForge.Abstractions" Version="1.2.0" />
+		<PackageReference Include="Heroicsoft.NetForge.Components" Version="1.2.0" />
+		<ProjectReference Include="..\Localize.Components\Localize.Components.csproj" />
+		<ProjectReference Include="..\Localize.Data.Sqlite\Localize.Data.Sqlite.csproj" />
+	</ItemGroup>
+
+</Project>

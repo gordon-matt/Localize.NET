@@ -1,0 +1,126 @@
+@page "/localize/strings"
+@page "/localize/strings/{CultureCode}"
+
+<PageTitle>@Title</PageTitle>
+
+<PageHeader Title="@Title" Icon="globe" Description="@Description">
+    <Actions>
+        <a class="nf-button" href="@LocalizeRoutes.Languages">Languages</a>
+        <a class="nf-button" href="@ExportHref">Export</a>
+    </Actions>
+</PageHeader>
+
+@if (loading)
+{
+    <p class="nf-muted">Loading.</p>
+}
+else if (denied)
+{
+    <EmptyState Icon="alert" Title="You can't edit strings" Description="Sign in with a role that is allowed to edit them." />
+}
+else if (loadError is not null)
+{
+    <EmptyState Icon="alert" Title="The strings could not be read" Description="@loadError" />
+}
+else
+{
+    <SearchField Value="search" ValueChanged="OnSearch" Placeholder="Search keys and text" Shortcut="true" />
+
+    @if (filtered.Count == 0)
+    {
+        <EmptyState Icon="search" Title="@(string.IsNullOrWhiteSpace(search) ? "No strings yet" : "Nothing matches")">
+            @if (string.IsNullOrWhiteSpace(search))
+            {
+                <p>Add a language pack, a JSON or RESX file, or turn on missing-key tracking and render a page.</p>
+                <a class="nf-button" href="@LocalizeRoutes.Languages">Back to languages</a>
+            }
+        </EmptyState>
+    }
+    else
+    {
+        <Table>
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    @if (IsInvariant)
+                    {
+                        <th>Default text</th>
+                    }
+                    else
+                    {
+                        <th>Default</th>
+                        <th>@CultureLabel</th>
+                    }
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in pageRows)
+                {
+                    <tr>
+                        <td class="nf-mono">@row.Key</td>
+                        @if (IsInvariant)
+                        {
+                            <td>@row.InvariantValue</td>
+                        }
+                        else
+                        {
+                            <td>@row.InvariantValue</td>
+                            <td>
+                                @if (row.HasTranslation)
+                                {
+                                    @row.LocalizedValue
+                                }
+                                else
+                                {
+                                    <span class="nf-muted">Falls back</span>
+                                }
+                            </td>
+                        }
+                        <td>
+                            <button type="button" class="nf-button" @onclick="() => Edit(row)">Edit</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </Table>
+        <Pager PageNumber="pageNumber"
+               PageSize="pageSize"
+               TotalCount="filtered.Count"
+               PageNumberChanged="ChangePage"
+               PageSizeChanged="ChangePageSize"
+               PageSizes="PageSizes" />
+    }
+}
+
+@if (selected is not null)
+{
+    <Drawer Title="@selected.Key" Open="true" Scrim="true" OnClose="CloseEditor" Width="36rem">
+        <Actions>
+            <button type="button" class="nf-button nf-button-primary" @onclick="SaveAsync" disabled="@busy">Save</button>
+            @if (selected.IsStored)
+            {
+                <button type="button" class="nf-button nf-button-danger" @onclick="DeleteAsync" disabled="@busy">Delete</button>
+            }
+        </Actions>
+        <ChildContent>
+        @if (!string.IsNullOrWhiteSpace(error))
+        {
+            <p class="nf-validation">@error</p>
+        }
+        @if (!IsInvariant)
+        {
+            <Field Label="Default text">
+                <p>@(string.IsNullOrEmpty(selected.InvariantValue) ? "No default text." : selected.InvariantValue)</p>
+            </Field>
+        }
+        <Field Label="@(IsInvariant ? "Default text" : CultureLabel)" For="translation">
+            <InputTextArea id="translation" class="nf-textarea" @bind-Value="draft" />
+            @if (!IsInvariant)
+            {
+                <span class="nf-hint">Leave this empty to drop the database copy and fall back. Text from a language pack, JSON file, or RESX stays where it is.</span>
+            }
+        </Field>
+        </ChildContent>
+    </Drawer>
+}

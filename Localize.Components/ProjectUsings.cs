@@ -1,0 +1,14 @@
+global using System.Globalization;
+global using Ardalis.Result;
+global using Localize;
+global using Heroicsoft.NetForge.Components.Dialogs;
+global using Heroicsoft.NetForge.Components.Toasts;
+global using Heroicsoft.NetForge.Results;
+global using Localize.Languages;
+global using Localize.Models;
+global using Localize.Strings;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Components;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Options;

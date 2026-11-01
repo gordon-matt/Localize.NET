@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Data/">
+    <Project Path="Localize.Data/Localize.Data.csproj" />
+    <Project Path="Localize.Data.MySql/Localize.Data.MySql.csproj" />
+    <Project Path="Localize.Data.Npgsql/Localize.Data.Npgsql.csproj" />
+    <Project Path="Localize.Data.Sql/Localize.Data.Sql.csproj" />
+    <Project Path="Localize.Data.Sqlite/Localize.Data.Sqlite.csproj" />
+  </Folder>
+  <Project Path="Localize.Core/Localize.Core.csproj" />
+  <Project Path="Localize.Services/Localize.Services.csproj" />
+  <Project Path="Localize.Components/Localize.Components.csproj" />
+  <Project Path="Localize.Tests/Localize.Tests.csproj" />
+  <Project Path="Localize.Demo/Localize.Demo.csproj" />
+</Solution>

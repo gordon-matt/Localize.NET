@@ -1,0 +1,39 @@
+@using System.Globalization
+@inject ILanguageService Languages
+@inject NavigationManager Navigation
+
+@if (items.Count > 0)
+{
+    <ChipGroup Role="navigation" Class="@Class">
+        @foreach (var language in items)
+        {
+            <Chip Href="@Href(language.CultureCode)" Selected="@IsCurrent(language.CultureCode)">@language.Name</Chip>
+        }
+    </ChipGroup>
+}
+
+@code {
+    [Parameter]
+    public string? Class { get; set; }
+
+    private IReadOnlyList<LanguageModel> items = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        var listed = await Languages.ListEnabledAsync();
+        if (listed.IsSuccess)
+        {
+            items = listed.Value;
+        }
+    }
+
+    private bool IsCurrent(string culture) =>
+        string.Equals(CultureInfo.CurrentUICulture.Name, culture, StringComparison.OrdinalIgnoreCase);
+
+    private string Href(string culture)
+    {
+        string relative = Navigation.ToBaseRelativePath(Navigation.Uri);
+        string path = string.IsNullOrEmpty(relative) ? "/" : "/" + relative;
+        return $"{LocalizeRoutes.Culture}/{Uri.EscapeDataString(culture)}?returnUrl={Uri.EscapeDataString(path)}";
+    }
+}

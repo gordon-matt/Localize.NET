@@ -1,0 +1,15 @@
+@page "/"
+@inject IStringLocalizer Localizer
+
+<PageTitle>@Localizer["Demo/Home.Title"]</PageTitle>
+
+<PageHeader Title="@Localizer["Demo/Home.Title"]" Icon="globe" Description="Switch culture to see the JSON file win over the language pack.">
+    <Actions>
+        <a class="nf-button nf-button-primary" href="/localize/languages">Manage languages</a>
+    </Actions>
+</PageHeader>
+
+<LanguageSwitcher />
+
+<p>@Localizer["Demo/Home.Body"]</p>
+<p>@Localizer["Demo/Home.Greeting", "Ada"]</p>

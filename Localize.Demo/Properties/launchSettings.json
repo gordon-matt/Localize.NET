@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Localize.Demo": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:5290",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

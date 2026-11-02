@@ -1,0 +1,40 @@
+/*
+ * These pages render inside the host document. A host stylesheet loaded after nf.css
+ * (Bootstrap, Radzen) paints the document body and native inputs, and the shell is
+ * transparent, so the dark theme shows light text on a light page. LogVue and
+ * IdentityNexus avoid that by owning their document. While this layout is on screen,
+ * paint the shell with the same NetForge tokens those apps use.
+ */
+
+html[data-theme] .nf-shell {
+    background: var(--nf-bg);
+    color: var(--nf-text);
+    color-scheme: light;
+}
+
+html[data-theme="dark"] .nf-shell {
+    color-scheme: dark;
+}
+
+html[data-theme] .nf-input,
+html[data-theme] .nf-textarea,
+html[data-theme] .nf-select {
+    color: var(--nf-text);
+    background-color: var(--nf-surface);
+    border-color: var(--nf-border);
+}
+
+html[data-theme] .nf-input::placeholder,
+html[data-theme] .nf-textarea::placeholder {
+    color: var(--nf-muted);
+    opacity: 1;
+}
+
+html[data-theme] .nf-input::file-selector-button {
+    margin-right: 0.75rem;
+    padding: 0.35rem 0.7rem;
+    color: var(--nf-text);
+    background: var(--nf-surface-2);
+    border: 1px solid var(--nf-border);
+    border-radius: var(--nf-radius-small);
+}

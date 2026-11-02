@@ -1,4 +1,4 @@
-# Localize
+<img src="https://github.com/gordon-matt/Localize.NET/blob/master/_Misc/Logo.png" alt="Logo" width="350" />
 
 Database, JSON, and RESX translations behind one `IStringLocalizer`, with a Blazor admin built on NetForge.
 
@@ -17,21 +17,40 @@ The invariant culture is stored as an empty culture code. A missing translation 
 
 ## Add it to a site
 
+The localizer and the admin are separate packages. A class library or another Razor class library references `Localize.Core` when it ships an `ILanguagePack` or a display-name attribute, and injects `IStringLocalizer` from `Microsoft.Extensions.Localization`. It does not reference `Localize.Components`. The host registers the pack and is the only project that takes the admin.
+
 ```csharp
+builder.Services.AddSingleton<ILanguagePack, OtherLibrary.LanguagePackInvariant>();
+
 builder.Services.AddLocalize(options =>
 {
     options.JsonDirectory = "Localization";
-    options.TrackMissingKeys = true; // Inferno's discover-on-first-use
+    options.TrackMissingKeys = true; // store a key the first time a page asks for it
 });
 builder.Services.AddLocalizeSqlite(); // or AddLocalizeSqlServer / AddLocalizeNpgsql / AddLocalizeMySql
-builder.Services.AddLocalizeComponents();
+```
 
-// existing language pack classes only change their namespace
-builder.Services.AddSingleton<ILanguagePack, MyLanguagePack>();
+`AddLocalize` replaces `IStringLocalizer`. Call it and the database method in either order. JSON, RESX, and language packs still resolve when no database is registered. `ILanguageService` and the editor need one. Migrations run on startup (`AutoMigrate`) and, for the global scope, `DefaultCulture` (en-US) is inserted as an enabled language.
+
+Inside a library:
+
+```csharp
+public sealed class HomePage(IStringLocalizer<HomePage> text)
+{
+    public string Title => text["Home.Title"];
+}
+```
+
+## Admin
+
+Reference `Localize.Components` from the host only.
+
+```csharp
+builder.Services.AddLocalizeComponents();
 ```
 
 ```csharp
-app.UseLocalize();   // replaces UseRequestLocalization
+app.UseLocalize();
 app.MapLocalize();   // culture cookie and JSON export
 
 app.MapRazorComponents<App>()
@@ -41,14 +60,10 @@ app.MapRazorComponents<App>()
 
 Point `ForgeRouter.AdditionalAssemblies` at the same assembly. Drop the link in with `AddLocalize()` on a menu group, or `IncludeRegistered()`, which files it under Settings.
 
-Admin routes:
+Routes:
 
 - `/localize/languages`
 - `/localize/strings/{cultureCode}`
-
-`AddLocalize` applies the database migrations on startup (`AutoMigrate`) and, for the global scope, inserts `DefaultCulture` (en-US) as an enabled language.
-
-Call `AddLocalize` and the provider method in either order. Both are required for the admin. JSON and RESX still resolve with no database, but the editor and `ILanguageService` need one.
 
 ## Multi-tenant scope
 
@@ -67,7 +82,7 @@ Call `ILanguageService.EnsureDefaultAsync()` when a tenant is created. The start
 
 ## Language packs
 
-Same shape Inferno already uses. `CultureCode` null is the invariant pack.
+`CultureCode` null is the invariant pack.
 
 ```csharp
 public sealed class MyLanguagePack : ILanguagePack
@@ -90,7 +105,7 @@ public sealed class MyLanguagePack : ILanguagePack
 - `Localization/fr-FR.json` or `Localization/fr-FR/Home.json` is French. Nested objects flatten with dots (`Home.Title`).
 - `default.json` or `invariant.json` is the invariant culture.
 - A file named `Home.json` in the root of that folder is ignored, so a stray JSON file is not treated as a culture.
-- The admin import also accepts Inferno's export: `cultureCode` plus `localizedStrings`. A culture the file introduces is added switched off.
+- The admin import accepts a flat dictionary, nested objects, or `{ "cultureCode", "localizedStrings" }`. A culture the file introduces is added switched off.
 
 ## RESX
 
@@ -102,7 +117,7 @@ The type needs the generated public static `ResourceManager`. RESX is read-only.
 
 ## Entity fields
 
-UI strings and translated entity fields are different tables, as they were in Mantle and Inferno. The entity keeps the invariant value. A row in `LocalizableProperties` replaces one property for one culture.
+UI strings and translated entity fields are different tables. The entity keeps the invariant value. A row in `LocalizableProperties` replaces one property for one culture.
 
 ```csharp
 string? title = await properties.ValueOrDefaultAsync(
@@ -111,17 +126,7 @@ string? title = await properties.ValueOrDefaultAsync(
 
 `FindAsync` loads a batch. `DeleteForEntityAsync` removes every culture when the entity is deleted. Scope is included, so two tenants with the same entity id do not collide.
 
-## Replacing Inferno
-
-1. Remove the Inferno localization projects from the host and reference `Localize.Components` plus one `Localize.Data.*` provider.
-2. Register `ILocalizationScope` from the current tenant, as above, and set `TrackMissingKeys`.
-3. Change language pack namespaces from `Inferno.Localization` to `Localize`. The interface is the same shape.
-4. Replace `AddInfernoLocalization()` and `UseRequestLocalization()` with `AddLocalize`, `UseLocalize`, and `MapLocalize`. The cookie name stays `CurrentCulture`, so visitors keep their choice.
-5. Add the components assembly to the router and point the Localization menu item at `/localize/languages`.
-6. Content blocks call `ILocalizablePropertyService` instead of the Inferno service. `ValueOrDefaultAsync` covers the single-field read. The batch method takes the same culture, entity type, ids, and property name.
-7. Plan a data move from `inferno.Languages`, `inferno.LocalizableStrings`, and `inferno.LocalizableProperties`. This library uses the `localize` schema, int keys, a string scope (the tenant id as text), and an empty string for the invariant culture. It does not read the old tables in place.
-
-`LocalizedDisplayNameAttribute` and `LocalizedHelpTextAttribute` still take a catalog key. They resolve `IStringLocalizer` once the host has started.
+`LocalizedDisplayNameAttribute` and `LocalizedHelpTextAttribute` take a catalog key. They resolve `IStringLocalizer` once the host has started.
 
 ## Options
 
@@ -138,9 +143,9 @@ Bound from the `Localize` section.
 | `AutoMigrate` | true | |
 | `SeedDefaultLanguage` | true | Global scope only |
 | `RequireAuthentication` | true | Admin pages. The culture switch stays public |
-| `ManagePolicy` | empty | Set this to an existing policy such as Inferno's languages policy |
+| `ManagePolicy` | empty | Authorization policy for the admin pages. Empty allows any signed-in user when authentication is required |
 | `ImportOnlyKnownKeys` | false | When true, import will not create keys that have no invariant row |
 
 ## Layout
 
-`Localize.Core` has no database and no UI. Packs and scopes reference that. `Localize.Services` is the catalog and the localizer. `Localize.Data` plus `Localize.Data.Sql`, `.Npgsql`, `.MySql`, and `.Sqlite` follow the same split as EasyChatz: mappings in one project, migrations in the provider project, and repositories bound to `ILocalizeDbContextFactory` so they do not take over the host's `IDbContextFactory`. `Localize.Components` is the Razor class library. `Localize.Demo` is a small host that shows the switcher and the admin.
+`Localize.Core` has no database and no UI. Packs and scopes reference that. `Localize.Services` is the catalog and the localizer. `Localize.Data` holds the mappings. `Localize.Data.Sql`, `.Npgsql`, `.MySql`, and `.Sqlite` hold the provider, the migrations, and the `AddLocalize*` method. Repositories are bound to `ILocalizeDbContextFactory` so they do not take over the host's `IDbContextFactory`. `Localize.Components` is the Razor class library. `Localize.Demo` is a small host that shows the switcher and the admin.

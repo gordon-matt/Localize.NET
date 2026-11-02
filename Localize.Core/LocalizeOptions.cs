@@ -8,10 +8,7 @@ public sealed class LocalizeOptions
     /// <summary>Culture used when the visitor has not chosen one. Seeded as an enabled language.</summary>
     public string DefaultCulture { get; set; } = "en-US";
 
-    /// <summary>
-    /// Cookie the culture switch writes. The default matches the cookie Inferno and Mantle already set,
-    /// so an existing site keeps the visitor's choice.
-    /// </summary>
+    /// <summary>Cookie the culture switch writes.</summary>
     public string CultureCookieName { get; set; } = "CurrentCulture";
 
     /// <summary><c>fr-FR</c> falls back to <c>fr</c>, then to the invariant strings.</summary>
@@ -19,7 +16,7 @@ public sealed class LocalizeOptions
 
     /// <summary>
     /// When a rendered key is missing from every source, store it in the database so an editor can
-    /// see it. This is how Inferno discovers strings. Leave it off for a site that only reads files.
+    /// see it. Leave it off for a site that only reads files.
     /// </summary>
     public bool TrackMissingKeys { get; set; }
 
@@ -46,7 +43,7 @@ public sealed class LocalizeOptions
     public bool RequireAuthentication { get; set; } = true;
 
     /// <summary>
-    /// Authorization policy for the admin pages, for example Inferno's languages policy.
+    /// Authorization policy for the admin pages.
     /// Empty allows any signed-in user when <see cref="RequireAuthentication"/> is set.
     /// </summary>
     public string? ManagePolicy { get; set; }

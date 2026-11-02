@@ -6,7 +6,7 @@
 <PageHeader Title="@Title" Icon="globe" Description="@Description">
     <Actions>
         <a class="nf-button" href="@LocalizeRoutes.Languages">Languages</a>
-        <a class="nf-button" href="@ExportHref">Export</a>
+        <a class="nf-button" href="@ExportHref" download data-enhance-nav="false" onclick="event.stopPropagation()">Export</a>
     </Actions>
 </PageHeader>
 

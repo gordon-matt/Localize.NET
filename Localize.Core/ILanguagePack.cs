@@ -2,8 +2,7 @@ namespace Localize;
 
 /// <summary>
 /// Default strings shipped with the application. Register every pack in dependency injection.
-/// Leave <see cref="CultureCode"/> null for the invariant culture. The same shape Inferno uses,
-/// so an existing pack class only changes its namespace.
+/// Leave <see cref="CultureCode"/> null for the invariant culture.
 /// </summary>
 public interface ILanguagePack
 {

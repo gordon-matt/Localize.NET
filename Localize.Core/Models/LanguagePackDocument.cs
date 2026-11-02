@@ -1,6 +1,6 @@
 namespace Localize.Models;
 
-/// <summary>JSON language pack. Property names match the file Inferno imports and exports.</summary>
+/// <summary>JSON language pack. <c>cultureCode</c> plus <c>localizedStrings</c>.</summary>
 public sealed class LanguagePackDocument
 {
     public string? CultureCode { get; set; }

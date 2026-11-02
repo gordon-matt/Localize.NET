@@ -3,7 +3,7 @@ namespace Localize;
 /// <summary>
 /// Reads a JSON localization file. Three shapes are accepted:
 /// a flat dictionary, a nested object flattened with dots, and a language-pack document
-/// (<c>cultureCode</c> plus <c>localizedStrings</c>), which is the file Inferno exports.
+/// (<c>cultureCode</c> plus <c>localizedStrings</c>).
 /// </summary>
 public static class JsonLocalizationReader
 {

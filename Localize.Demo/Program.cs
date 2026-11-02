@@ -30,6 +30,8 @@ builder.Services.AddHostedService<FrenchLanguageSeeder>();
 builder.Services.Configure<ForgeShellOptions>(shell =>
 {
     shell.Brand = "Localize";
+    shell.LogoUrl = "img/Logo.png";
+    shell.MarkUrl = "img/Icon.png";
     shell.UseSharedMenu = true;
     shell.ShowUserMenu = false;
 });

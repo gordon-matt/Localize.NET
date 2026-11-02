@@ -59,7 +59,7 @@ public static class LocalizeEndpointExtensions
         IOptions<LocalizeOptions> options,
         ILocalizableStringService strings)
     {
-        if (!await LocalizeAccess.AllowAsync(options.Value, http.RequestServices))
+        if (!await LocalizeAccess.AllowAsync(options.Value, http.RequestServices, http.User))
         {
             return Results.Challenge();
         }

@@ -56,9 +56,16 @@ public static class LocalizeEndpointExtensions
     private static async Task<HttpResult> ExportAsync(
         string cultureCode,
         HttpContext http,
-        IOptions<LocalizeOptions> options,
-        ILocalizableStringService strings)
+        IOptions<LocalizeOptions> options)
     {
+        // The string service exists only after a database is registered. Resolving it here keeps
+        // this GET from being rejected at startup when the parameter would otherwise be inferred as a body.
+        var strings = http.RequestServices.GetService<ILocalizableStringService>();
+        if (strings is null)
+        {
+            return Results.NotFound();
+        }
+
         if (!await LocalizeAccess.AllowAsync(options.Value, http.RequestServices, http.User))
         {
             return Results.Challenge();

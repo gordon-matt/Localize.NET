@@ -21,11 +21,12 @@ builder.Services.AddLocalize(options =>
     options.JsonDirectory = "Localization";
     options.TrackMissingKeys = true;
 });
+builder.Services.AddLocalizeResx<DemoResources>();
 builder.Services.AddLocalizeSqlite();
 builder.Services.AddLocalizeComponents();
 builder.Services.AddSingleton<IAuthProviderService, DemoAuth>();
 builder.Services.AddSingleton<ILanguagePack, DemoLanguagePack>();
-builder.Services.AddHostedService<FrenchLanguageSeeder>();
+builder.Services.AddHostedService<DemoSampleSeeder>();
 
 builder.Services.Configure<ForgeShellOptions>(shell =>
 {

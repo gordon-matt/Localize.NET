@@ -1,4 +1,7 @@
 {
   "Demo/Home.Title": "Démo de localisation",
-  "Demo/Home.Body": "Bonjour depuis le fichier JSON."
+  "Demo/Home.Body": "Bonjour depuis le fichier JSON.",
+  "Demo/Home.Greeting": "Bonjour {0}",
+  "Demo/SameCulture": "Depuis JSON.",
+  "Demo/Only.Json": "Seul un fichier JSON (fr-FR) a ceci."
 }

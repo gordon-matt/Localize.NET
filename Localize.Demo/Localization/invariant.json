@@ -1,0 +1,12 @@
+{
+  "Demo/Home.Title": "Localization demo (JSON)",
+  "Demo/Home.Body": "Hello from JSON.",
+  "Demo/SameCulture": "From JSON.",
+  "Demo/Only.Json": "Only a JSON file has this.",
+  "Demo/Only.Database": "JSON loses when the database has this key.",
+  "Demo": {
+    "Nested": {
+      "Note": "Hello from a nested JSON object."
+    }
+  }
+}

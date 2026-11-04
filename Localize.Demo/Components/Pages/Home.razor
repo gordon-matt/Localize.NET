@@ -1,11 +1,12 @@
 @page "/"
-@inject IStringLocalizer Localizer
+@namespace Localize.Demo.Components.Pages
+@using Heroicsoft.NetForge.Components.Tables
 
 <PageTitle>@Localizer["Demo/Home.Title"]</PageTitle>
 
-<PageHeader Title="@Localizer["Demo/Home.Title"]" Icon="globe" Description="Switch culture to see the JSON file win over the language pack.">
+<PageHeader Title="@Localizer["Demo/Home.Title"]" Icon="globe" Description="The request culture is used first, then each parent, then the invariant text. Within one culture, a higher priority wins.">
     <Actions>
-        <a class="nf-button nf-button-primary" href="/localize/languages">Manage languages</a>
+        <a class="nf-button nf-button-primary" href="@LocalizeRoutes.Languages">Manage languages</a>
     </Actions>
 </PageHeader>
 
@@ -13,3 +14,68 @@
 
 <p>@Localizer["Demo/Home.Body"]</p>
 <p>@Localizer["Demo/Home.Greeting", "Ada"]</p>
+<p class="nf-hint">The greeting fills in the name. The table shows the stored text, before that happens.</p>
+
+<h2>What each source contributed</h2>
+<p>
+    Lookup order: @ChainLabel.
+    Within one step, the higher number in the column heading wins.
+    The bold cell is what <code>IStringLocalizer</code> returns. The culture under a value is where that text was found.
+</p>
+
+<div style="overflow-x: auto">
+    <Table>
+        <thead>
+            <tr>
+                <th>Key</th>
+                @foreach (var source in OrderedSources)
+                {
+                    <th>@Heading(source)</th>
+                }
+                <th>Why</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Rows)
+            {
+                <tr>
+                    <td class="nf-mono">@row.Key</td>
+                    @foreach (var cell in row.Cells)
+                    {
+                        <td>
+                            @if (cell.Text is null)
+                            {
+                                <span class="nf-muted">—</span>
+                            }
+                            else if (cell.Wins)
+                            {
+                                <strong>@cell.Text</strong>
+                                <div class="nf-hint">@cell.CultureLabel</div>
+                            }
+                            else
+                            {
+                                @cell.Text
+                                <div class="nf-hint">@cell.CultureLabel</div>
+                            }
+                        </td>
+                    }
+                    <td>@row.Reason</td>
+                </tr>
+            }
+        </tbody>
+    </Table>
+</div>
+
+<h2>Files</h2>
+<ul>
+    <li><code>Resources/DemoResources.resx</code>, <code>DemoResources.fr.resx</code>, and <code>DemoResources.fr-FR.resx</code>, registered with <code>AddLocalizeResx&lt;DemoResources&gt;()</code>.</li>
+    <li><code>Localization/invariant.json</code> and <code>Localization/fr.json</code>. The folder is <code>JsonDirectory</code>.</li>
+    <li><code>Localization/fr-FR.json</code> is a flat dictionary. <code>Localization/fr-FR/Home.json</code> is nested, so it flattens to <code>Demo.Nested.Note</code>.</li>
+    <li><code>DemoLanguagePack</code> is the invariant language pack.</li>
+</ul>
+<p>
+    <a href="@LocalizeRoutes.Strings">Edit the default text</a>
+    or <a href="@LocalizeRoutes.StringsFor(Culture)">edit @CultureLabel(Culture)</a>.
+    A saved row replaces the file for that culture. Delete the row and the file is used again.
+    <code>Demo/Only.Database</code> is inserted at startup when that row is missing, so this table has a database winner to show. An edit you save is kept.
+</p>

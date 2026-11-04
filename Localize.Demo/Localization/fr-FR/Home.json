@@ -1,0 +1,7 @@
+{
+  "Demo": {
+    "Nested": {
+      "Note": "Bonjour depuis un objet JSON imbriqué."
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<div class="lz-culture-picker" style="display: grid; gap: 0.5rem">
+    <select id="@Id" class="nf-select nf-select-block" aria-label="Language" disabled="@Disabled" value="@language" @onchange="LanguageChangedAsync">
+        <option value="">@Placeholder</option>
+        @if (isUnlisted)
+        {
+            <option value="@Value">@Value</option>
+        }
+        @foreach (var choice in CultureCodes.NeutralCultures())
+        {
+            <option value="@choice.Code">@choice.DisplayName (@choice.Code)</option>
+        }
+    </select>
+
+    @if (regions.Count > 0)
+    {
+        <select class="nf-select nf-select-block" aria-label="Region" disabled="@Disabled" value="@Value" @onchange="RegionChangedAsync">
+            <option value="@language">Any region</option>
+            @foreach (var choice in regions)
+            {
+                <option value="@choice.Code">@choice.DisplayName (@choice.Code)</option>
+            }
+        </select>
+    }
+</div>

@@ -25,8 +25,10 @@ else
 {
     <div class="nf-field">
         <label for="pack-culture">Import a language pack</label>
-        <div class="nf-chip-row">
-            <input id="pack-culture" class="nf-input" style="max-width: 12rem" placeholder="fr-FR if the file doesn't say" @bind="importCulture" @bind:event="oninput" />
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: flex-start">
+            <div style="min-width: 16rem">
+                <CulturePicker Id="pack-culture" @bind-Value="importCulture" Placeholder="Use the culture named in the file" Disabled="@busy" />
+            </div>
             <InputFile OnChange="ImportAsync" accept=".json,application/json" class="nf-input" disabled="@busy" />
         </div>
         <span class="nf-hint">JSON object, or a file with cultureCode and localizedStrings. A new culture is added switched off.</span>
@@ -95,8 +97,8 @@ else
                 <p class="nf-validation">@error</p>
             }
             <Field Label="Culture code" For="culture">
-                <InputText id="culture" class="nf-input" @bind-Value="form.CultureCode" placeholder="fr-FR" disabled="@(form.Id != 0)" />
-                <span class="nf-hint">A .NET culture code, such as en-US or ar.</span>
+                <CulturePicker Id="culture" @bind-Value="form.CultureCode" Disabled="@(form.Id != 0)" />
+                <span class="nf-hint">Pick the language, then a region if the text differs by country.</span>
             </Field>
             <Field Label="Name" For="name">
                 <InputText id="name" class="nf-input" @bind-Value="form.Name" placeholder="French" />

@@ -8,6 +8,30 @@ public static class CultureCodes
     /// <summary>Scope used when the host has a single tenant.</summary>
     public const string GlobalScope = "";
 
+    private static readonly Lazy<IReadOnlyList<CultureChoice>> neutralCultures = new(() => CultureInfo
+        .GetCultures(CultureTypes.NeutralCultures)
+        .Where(culture => culture.Name.Length > 0 && culture.Parent.Name.Length == 0)
+        .Select(ToChoice)
+        .OrderBy(choice => choice.DisplayName, StringComparer.CurrentCultureIgnoreCase)
+        .ToList());
+
+    // Regions are grouped once by language, so the picker does not walk every culture on each render.
+    private static readonly Lazy<Dictionary<string, IReadOnlyList<CultureChoice>>> specificCultures = new(() => CultureInfo
+        .GetCultures(CultureTypes.SpecificCultures)
+        .Where(culture => culture.Name.Length > 0)
+        .Select(culture => (Root: RootNeutral(culture.Name), Choice: ToChoice(culture)))
+        .Where(entry => entry.Root is not null)
+        .GroupBy(entry => entry.Root!, StringComparer.OrdinalIgnoreCase)
+        .ToDictionary(
+            group => group.Key,
+            group => (IReadOnlyList<CultureChoice>)group
+                .Select(entry => entry.Choice)
+                .OrderBy(choice => choice.DisplayName, StringComparer.CurrentCultureIgnoreCase)
+                .ToList(),
+            StringComparer.OrdinalIgnoreCase));
+
+    private static CultureChoice ToChoice(CultureInfo culture) => new(culture.Name, culture.DisplayName);
+
     public static string Normalize(string? cultureCode)
     {
         if (string.IsNullOrWhiteSpace(cultureCode))
@@ -63,6 +87,51 @@ public static class CultureCodes
         catch (CultureNotFoundException)
         {
             return cultureCode;
+        }
+    }
+
+    /// <summary>
+    /// The top-level neutral cultures (a language with no region), by display name.
+    /// Intermediate ones such as zh-Hans are left out; their regions are listed under the language they belong to.
+    /// </summary>
+    public static IReadOnlyList<CultureChoice> NeutralCultures() => neutralCultures.Value;
+
+    /// <summary>The regional cultures of a language, by display name. Empty for a code that is not a known language.</summary>
+    public static IReadOnlyList<CultureChoice> SpecificCulturesOf(string? neutralCode)
+    {
+        string? root = RootNeutral(neutralCode);
+        return root is not null && specificCultures.Value.TryGetValue(root, out var choices) ? choices : [];
+    }
+
+    /// <summary>
+    /// The language a culture belongs to: <c>fr</c> for <c>fr-CA</c>, and <c>zh</c> for <c>zh-Hans-CN</c>.
+    /// Null for a blank or unknown code.
+    /// </summary>
+    public static string? RootNeutral(string? cultureCode)
+    {
+        if (string.IsNullOrWhiteSpace(cultureCode))
+        {
+            return null;
+        }
+
+        try
+        {
+            var culture = CultureInfo.GetCultureInfo(cultureCode.Trim());
+            if (culture.Name.Length == 0)
+            {
+                return null;
+            }
+
+            while (culture.Parent.Name.Length > 0)
+            {
+                culture = culture.Parent;
+            }
+
+            return culture.Name;
+        }
+        catch (CultureNotFoundException)
+        {
+            return null;
         }
     }
 

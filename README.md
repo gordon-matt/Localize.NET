@@ -11,9 +11,23 @@ A string is resolved from the request culture, then each parent culture, then th
 | JSON files | 50 | No |
 | Database | 100 | Yes, from the admin |
 
+RESX, JSON, and language packs are read-only. The admin manages database rows only. Registering a database leaves the other sources in place. They keep supplying a string until a row exists for that key and culture.
+
+A row is written when someone saves in the editor, imports a file, or resets the scope to its language packs. `TrackMissingKeys` also writes one, for a key that no source had, and stores the key itself as the invariant text. Once that row exists, the stored text is what the localizer returns. Editing the RESX or JSON file has no effect on that key. Delete the row and the file is used again.
+
 Set `Localize:JsonOverridesDatabase` when a deployed file should beat a stored row.
 
-The invariant culture is stored as an empty culture code. A missing translation falls through. Deleting a translation removes the row, so the fallback works again.
+The invariant culture is stored as an empty culture code. A missing translation falls through.
+
+## Screenshots
+
+<img src="https://github.com/gordon-matt/Localize.NET/blob/master/_Misc/Screenshots/Languages.png" alt="Languages" />
+
+<img src="https://github.com/gordon-matt/Localize.NET/blob/master/_Misc/Screenshots/Strings.png" alt="Strings" />
+
+<img src="https://github.com/gordon-matt/Localize.NET/blob/master/_Misc/Screenshots/Demo_English.png" alt="Demo - English" />
+
+<img src="https://github.com/gordon-matt/Localize.NET/blob/master/_Misc/Screenshots/Demo_French.png" alt="Demo - French" />
 
 ## Add it to a site
 
@@ -96,7 +110,7 @@ public sealed class MyLanguagePack : ILanguagePack
 }
 ```
 
-`T["App/Home.Title"]` reads that text until an editor, a JSON file, or a RESX overrides it. `T["App/Home.Greeting", name]` formats with the current UI culture. The string editor lists every key those sources know, and saving writes a database override for the current scope. Reset on the languages page deletes the scope's stored strings and inserts the packs again. Files and RESX are left alone.
+`T["App/Home.Title"]` reads that text until an editor, a JSON file, or a RESX overrides it. `T["App/Home.Greeting", name]` formats with the current UI culture. The string editor lists every key those sources know, and saving writes a database override for the current scope. Reset on the languages page deletes the scope's stored strings and inserts the packs again. The files stay on disk, but the new rows win over RESX and JSON for those keys.
 
 ## JSON
 
@@ -137,7 +151,7 @@ Bound from the `Localize` section.
 | `DefaultCulture` | `en-US` | Used when the visitor has not chosen, and seeded as a language |
 | `CultureCookieName` | `CurrentCulture` | |
 | `UseParentCultureFallback` | true | `fr-FR` then `fr` then invariant |
-| `TrackMissingKeys` | false | Store a key the first time a page asks for it |
+| `TrackMissingKeys` | false | Store a missing key the first time a page asks for it. That row then wins over a file added later |
 | `JsonDirectory` | empty | No JSON until this is set |
 | `JsonOverridesDatabase` | false | |
 | `AutoMigrate` | true | |

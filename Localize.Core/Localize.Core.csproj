@@ -4,6 +4,7 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<RootNamespace>Localize</RootNamespace>
 		<Description>Contracts, options and file parsing for Localize. No database and no UI.</Description>
+		<PackageTags>localization;i18n;localizer;istringlocalizer;resx;json;language-pack;aspnetcore</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>

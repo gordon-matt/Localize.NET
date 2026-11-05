@@ -1,4 +1,4 @@
-<img src="https://github.com/gordon-matt/Localize.NET/blob/master/_Misc/Logo.png" alt="Logo" width="350" />
+<img src="https://github.com/gordon-matt/Localize.NET/raw/master/_Misc/Logo.png" alt="Logo" width="350" />
 
 Database, JSON, and RESX translations behind one `IStringLocalizer`, with a Blazor admin built on NetForge.
 

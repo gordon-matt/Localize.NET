@@ -4,13 +4,14 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<RootNamespace>Localize.Components</RootNamespace>
 		<Description>Blazor admin for Localize. Languages, string editing, import and export.</Description>
+		<PackageTags>localization;i18n;blazor;razor;admin;translation;import-export;netforge</PackageTags>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-		<PackageReference Include="Heroicsoft.NetForge.Components" Version="1.2.2" />
-		<PackageReference Include="Heroicsoft.NetForge.Results" Version="1.2.2" />
+		<PackageReference Include="Heroicsoft.NetForge.Components" Version="1.2.3" />
+		<PackageReference Include="Heroicsoft.NetForge.Results" Version="1.2.3" />
 	</ItemGroup>
 
 	<ItemGroup>

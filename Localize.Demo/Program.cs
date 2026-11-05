@@ -24,6 +24,8 @@ builder.Services.AddLocalize(options =>
 builder.Services.AddLocalizeResx<DemoResources>();
 builder.Services.AddLocalizeSqlite();
 builder.Services.AddLocalizeComponents();
+
+builder.Services.ConfigureNetForgeToastSounds(sounds => sounds.EnableSounds = true);
 builder.Services.AddSingleton<IAuthProviderService, DemoAuth>();
 builder.Services.AddSingleton<ILanguagePack, DemoLanguagePack>();
 builder.Services.AddHostedService<DemoSampleSeeder>();

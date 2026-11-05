@@ -2,17 +2,27 @@
 
 	<PropertyGroup>
 		<LangVersion>latest</LangVersion>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>Matt Gordon</Authors>
 		<Company>Matt Gordon</Company>
 		<Product>Localize</Product>
-		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-		<PackageTags>localization;blazor;resx;json;i18n</PackageTags>
+		<Copyright>Copyright © Matt Gordon</Copyright>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/gordon-matt/Localize.NET</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/gordon-matt/Localize.NET</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageIcon>Icon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" Visible="false" />
+		<None Include="$(MSBuildThisFileDirectory)_Misc\Icon.png" Pack="true" PackagePath="\" Visible="false" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />

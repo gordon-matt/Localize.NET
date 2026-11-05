@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<Description>MySQL storage for Localize.</Description>
+		<PackageTags>localization;i18n;entity-framework-core;efcore;mysql;database;istringlocalizer</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>

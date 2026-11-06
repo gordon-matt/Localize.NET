@@ -31,7 +31,7 @@ public class LocalizeDbContextFactory(string connectionString) : ILocalizeDbCont
 
         optionsBuilder.UseMySQL(connectionString, mySql => mySql
             .MigrationsAssembly(typeof(LocalizeDbContext).Assembly.GetName().Name)
-            .MigrationsHistoryTable(Constants.MigrationsHistoryTable, Constants.Schema));
+            .MigrationsHistoryTable(Constants.MigrationsHistoryTable));
 
         return optionsBuilder.Options;
     }

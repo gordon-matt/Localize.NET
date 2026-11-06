@@ -15,7 +15,6 @@ namespace Localize.Data.MySql.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("localize")
                 .HasAnnotation("ProductVersion", "10.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
@@ -57,7 +56,7 @@ namespace Localize.Data.MySql.Migrations
                     b.HasIndex("ScopeId", "CultureCode")
                         .IsUnique();
 
-                    b.ToTable("Languages", "localize");
+                    b.ToTable("Localize_Languages", (string)null);
                 });
 
             modelBuilder.Entity("Localize.Data.Entities.LocalizableProperty", b =>
@@ -105,7 +104,7 @@ namespace Localize.Data.MySql.Migrations
                     b.HasIndex("ScopeId", "CultureCode", "EntityType", "EntityId", "Property")
                         .IsUnique();
 
-                    b.ToTable("LocalizableProperties", "localize");
+                    b.ToTable("Localize_LocalizableProperties", (string)null);
                 });
 
             modelBuilder.Entity("Localize.Data.Entities.LocalizableString", b =>
@@ -141,7 +140,7 @@ namespace Localize.Data.MySql.Migrations
                     b.HasIndex("ScopeId", "CultureCode", "TextKey")
                         .IsUnique();
 
-                    b.ToTable("LocalizableStrings", "localize");
+                    b.ToTable("Localize_LocalizableStrings", (string)null);
                 });
 #pragma warning restore 612, 618
         }

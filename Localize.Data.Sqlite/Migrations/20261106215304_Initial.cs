@@ -10,12 +10,8 @@ namespace Localize.Data.Sqlite.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "localize");
-
             migrationBuilder.CreateTable(
-                name: "Languages",
-                schema: "localize",
+                name: "Localize_Languages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -29,12 +25,11 @@ namespace Localize.Data.Sqlite.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Languages", x => x.Id);
+                    table.PrimaryKey("PK_Localize_Languages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LocalizableProperties",
-                schema: "localize",
+                name: "Localize_LocalizableProperties",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -48,12 +43,11 @@ namespace Localize.Data.Sqlite.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LocalizableProperties", x => x.Id);
+                    table.PrimaryKey("PK_Localize_LocalizableProperties", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LocalizableStrings",
-                schema: "localize",
+                name: "Localize_LocalizableStrings",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -65,27 +59,24 @@ namespace Localize.Data.Sqlite.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LocalizableStrings", x => x.Id);
+                    table.PrimaryKey("PK_Localize_LocalizableStrings", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Languages_ScopeId_CultureCode",
-                schema: "localize",
-                table: "Languages",
+                name: "IX_Localize_Languages_ScopeId_CultureCode",
+                table: "Localize_Languages",
                 columns: new[] { "ScopeId", "CultureCode" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_LocalizableProperties_ScopeId_CultureCode_EntityType_EntityId_Property",
-                schema: "localize",
-                table: "LocalizableProperties",
+                name: "IX_Localize_LocalizableProperties_ScopeId_CultureCode_EntityType_EntityId_Property",
+                table: "Localize_LocalizableProperties",
                 columns: new[] { "ScopeId", "CultureCode", "EntityType", "EntityId", "Property" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_LocalizableStrings_ScopeId_CultureCode_TextKey",
-                schema: "localize",
-                table: "LocalizableStrings",
+                name: "IX_Localize_LocalizableStrings_ScopeId_CultureCode_TextKey",
+                table: "Localize_LocalizableStrings",
                 columns: new[] { "ScopeId", "CultureCode", "TextKey" },
                 unique: true);
         }
@@ -94,16 +85,13 @@ namespace Localize.Data.Sqlite.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Languages",
-                schema: "localize");
+                name: "Localize_Languages");
 
             migrationBuilder.DropTable(
-                name: "LocalizableProperties",
-                schema: "localize");
+                name: "Localize_LocalizableProperties");
 
             migrationBuilder.DropTable(
-                name: "LocalizableStrings",
-                schema: "localize");
+                name: "Localize_LocalizableStrings");
         }
     }
 }

@@ -5,8 +5,14 @@ namespace Localize;
 /// </summary>
 public static class Constants
 {
-    /// <summary>Database schema for every provider that supports one. SQLite stores the same tables without a schema.</summary>
+    /// <summary>Database schema for providers that support one (SQL Server and PostgreSQL).</summary>
     public const string Schema = "localize";
+
+    /// <summary>
+    /// Prepended to every table name on providers without schemas. In MySQL a schema is a database,
+    /// and SQLite has none, so the tables stay unqualified and are prefixed instead.
+    /// </summary>
+    public const string TablePrefix = "Localize_";
 
     /// <summary>Kept apart from the host's migrations history so both can share a database.</summary>
     public const string MigrationsHistoryTable = "__LocalizeMigrationsHistory";

@@ -1,5 +1,4 @@
 using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Localize.Data.Sqlite;
 
@@ -34,10 +33,7 @@ public class LocalizeDbContextFactory(string connectionString) : ILocalizeDbCont
 
         optionsBuilder.UseSqlite(Prepare(connectionString), sqlite => sqlite
             .MigrationsAssembly(typeof(LocalizeDbContext).Assembly.GetName().Name)
-            .MigrationsHistoryTable(Constants.MigrationsHistoryTable, Constants.Schema));
-
-        // SQLite has no schemas. HasDefaultSchema only names the tables; the warning is noise.
-        optionsBuilder.ConfigureWarnings(w => w.Ignore(SqliteEventId.SchemaConfiguredWarning));
+            .MigrationsHistoryTable(Constants.MigrationsHistoryTable));
 
         return optionsBuilder.Options;
     }

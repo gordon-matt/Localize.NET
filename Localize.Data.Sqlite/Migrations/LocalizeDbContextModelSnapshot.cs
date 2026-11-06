@@ -14,9 +14,7 @@ namespace Localize.Data.Sqlite.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasDefaultSchema("localize")
-                .HasAnnotation("ProductVersion", "10.0.14");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.14");
 
             modelBuilder.Entity("Localize.Data.Entities.Language", b =>
                 {
@@ -56,7 +54,7 @@ namespace Localize.Data.Sqlite.Migrations
                     b.HasIndex("ScopeId", "CultureCode")
                         .IsUnique();
 
-                    b.ToTable("Languages", "localize");
+                    b.ToTable("Localize_Languages", (string)null);
                 });
 
             modelBuilder.Entity("Localize.Data.Entities.LocalizableProperty", b =>
@@ -104,7 +102,7 @@ namespace Localize.Data.Sqlite.Migrations
                     b.HasIndex("ScopeId", "CultureCode", "EntityType", "EntityId", "Property")
                         .IsUnique();
 
-                    b.ToTable("LocalizableProperties", "localize");
+                    b.ToTable("Localize_LocalizableProperties", (string)null);
                 });
 
             modelBuilder.Entity("Localize.Data.Entities.LocalizableString", b =>
@@ -140,7 +138,7 @@ namespace Localize.Data.Sqlite.Migrations
                     b.HasIndex("ScopeId", "CultureCode", "TextKey")
                         .IsUnique();
 
-                    b.ToTable("LocalizableStrings", "localize");
+                    b.ToTable("Localize_LocalizableStrings", (string)null);
                 });
 #pragma warning restore 612, 618
         }

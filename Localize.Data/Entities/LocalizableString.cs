@@ -3,17 +3,36 @@ namespace Localize.Data.Entities;
 /// <summary>One translated UI string. An empty <see cref="CultureCode"/> is the invariant value.</summary>
 public class LocalizableString : BaseEntity<int>
 {
+    /// <summary>
+    /// Gets or sets the scope identifier.
+    /// </summary>
     public string ScopeId { get; set; } = "";
 
+    /// <summary>
+    /// Gets or sets the culture code.
+    /// </summary>
     public string CultureCode { get; set; } = "";
 
+    /// <summary>
+    /// Gets or sets the text key.
+    /// </summary>
     public string TextKey { get; set; } = "";
 
+    /// <summary>
+    /// Gets or sets the text value.
+    /// </summary>
     public string? TextValue { get; set; }
 }
 
+/// <summary>
+/// Represents the localizable string map.
+/// </summary>
 public class LocalizableStringMap : IEntityTypeConfiguration<LocalizableString>
 {
+    /// <summary>
+    /// Configures the value.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
     public void Configure(EntityTypeBuilder<LocalizableString> builder)
     {
         builder.ToTable(Constants.Tables.LocalizableStrings, Constants.Schema);

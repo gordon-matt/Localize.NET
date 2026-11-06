@@ -6,21 +6,46 @@ namespace Localize.Data.Entities;
 /// </summary>
 public class LocalizableProperty : BaseEntity<int>
 {
+    /// <summary>
+    /// Gets or sets the scope identifier.
+    /// </summary>
     public string ScopeId { get; set; } = "";
 
+    /// <summary>
+    /// Gets or sets the culture code.
+    /// </summary>
     public string CultureCode { get; set; } = "";
 
+    /// <summary>
+    /// Gets or sets the entity type.
+    /// </summary>
     public string EntityType { get; set; } = "";
 
+    /// <summary>
+    /// Gets or sets the entity identifier.
+    /// </summary>
     public string EntityId { get; set; } = "";
 
+    /// <summary>
+    /// Gets or sets the property.
+    /// </summary>
     public string Property { get; set; } = "";
 
+    /// <summary>
+    /// Gets or sets the value.
+    /// </summary>
     public string? Value { get; set; }
 }
 
+/// <summary>
+/// Represents the localizable property map.
+/// </summary>
 public class LocalizablePropertyMap : IEntityTypeConfiguration<LocalizableProperty>
 {
+    /// <summary>
+    /// Configures the value.
+    /// </summary>
+    /// <param name="builder">The builder.</param>
     public void Configure(EntityTypeBuilder<LocalizableProperty> builder)
     {
         builder.ToTable(Constants.Tables.LocalizableProperties, Constants.Schema);

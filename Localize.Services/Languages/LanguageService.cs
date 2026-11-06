@@ -1,5 +1,8 @@
 namespace Localize.Languages;
 
+/// <summary>
+/// Represents the language service.
+/// </summary>
 public sealed class LanguageService(
     IRepository<Language> languages,
     IRepository<LocalizableString> strings,
@@ -8,6 +11,11 @@ public sealed class LanguageService(
     IOptions<LocalizeOptions> options,
     ILogger<LanguageService> logger) : ILanguageService
 {
+    /// <summary>
+    /// Lists the value.
+    /// </summary>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the languages.</returns>
     public async Task<Result<IReadOnlyList<LanguageModel>>> ListAsync(CancellationToken cancellationToken = default)
     {
         string current = CurrentScope();
@@ -21,6 +29,11 @@ public sealed class LanguageService(
         return Result<IReadOnlyList<LanguageModel>>.Success(page.Select(ToModel).ToArray());
     }
 
+    /// <summary>
+    /// Lists the enabled.
+    /// </summary>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the languages.</returns>
     public async Task<Result<IReadOnlyList<LanguageModel>>> ListEnabledAsync(CancellationToken cancellationToken = default)
     {
         var listed = await ListAsync(cancellationToken);
@@ -32,12 +45,24 @@ public sealed class LanguageService(
         return Result<IReadOnlyList<LanguageModel>>.Success(listed.Value.Where(language => language.IsEnabled).ToArray());
     }
 
+    /// <summary>
+    /// Gets the value.
+    /// </summary>
+    /// <param name="id">The identifier.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the language.</returns>
     public async Task<Result<LanguageModel>> GetAsync(int id, CancellationToken cancellationToken = default)
     {
         var found = await FindInScopeAsync(id, cancellationToken);
         return found.IsSuccess ? Result<LanguageModel>.Success(ToModel(found.Value)) : found.To<LanguageModel>();
     }
 
+    /// <summary>
+    /// Saves the value.
+    /// </summary>
+    /// <param name="form">The form.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the language.</returns>
     public async Task<Result<LanguageModel>> SaveAsync(LanguageForm form, CancellationToken cancellationToken = default)
     {
         string current = CurrentScope();
@@ -92,6 +117,12 @@ public sealed class LanguageService(
         return Result<LanguageModel>.Success(ToModel(entity));
     }
 
+    /// <summary>
+    /// Deletes the value.
+    /// </summary>
+    /// <param name="id">The identifier.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the result.</returns>
     public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
         var existing = await FindInScopeAsync(id, cancellationToken);
@@ -111,6 +142,11 @@ public sealed class LanguageService(
         return Result.Success();
     }
 
+    /// <summary>
+    /// Ensures the default.
+    /// </summary>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the language.</returns>
     public async Task<Result<LanguageModel>> EnsureDefaultAsync(CancellationToken cancellationToken = default)
     {
         if (!CultureCodes.IsKnown(options.Value.DefaultCulture))

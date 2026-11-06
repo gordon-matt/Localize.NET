@@ -2,6 +2,9 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Localize;
 
+/// <summary>
+/// Represents the localization catalog.
+/// </summary>
 public sealed class LocalizationCatalog(
     IMemoryCache memory,
     ILocalizationCache cache,
@@ -10,6 +13,12 @@ public sealed class LocalizationCatalog(
 {
     private static readonly IReadOnlyDictionary<string, string> Empty = new Dictionary<string, string>();
 
+    /// <summary>
+    /// Gets the culture.
+    /// </summary>
+    /// <param name="scopeId">The scope identifier.</param>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <returns>The culture.</returns>
     public IReadOnlyDictionary<string, string> GetCulture(string? scopeId, string? cultureCode)
     {
         string scope = CultureCodes.NormalizeScope(scopeId);
@@ -35,6 +44,13 @@ public sealed class LocalizationCatalog(
         }) ?? Empty;
     }
 
+    /// <summary>
+    /// Gets the string.
+    /// </summary>
+    /// <param name="scopeId">The scope identifier.</param>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <param name="key">The key.</param>
+    /// <returns>The string.</returns>
     public string? GetString(string? scopeId, string? cultureCode, string key)
     {
         if (string.IsNullOrEmpty(key))
@@ -46,6 +62,13 @@ public sealed class LocalizationCatalog(
         return all.TryGetValue(key, out string? value) ? value : null;
     }
 
+    /// <summary>
+    /// Gets the all.
+    /// </summary>
+    /// <param name="scopeId">The scope identifier.</param>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <param name="includeParents">The include parents.</param>
+    /// <returns>The all.</returns>
     public IReadOnlyDictionary<string, string> GetAll(string? scopeId, string? cultureCode, bool includeParents)
     {
         string scope = CultureCodes.NormalizeScope(scopeId);

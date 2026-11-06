@@ -1,5 +1,8 @@
 namespace Localize;
 
+/// <summary>
+/// Provides constants.
+/// </summary>
 public static class Constants
 {
     /// <summary>Database schema for every provider that supports one. SQLite stores the same tables without a schema.</summary>
@@ -8,17 +11,41 @@ public static class Constants
     /// <summary>Kept apart from the host's migrations history so both can share a database.</summary>
     public const string MigrationsHistoryTable = "__LocalizeMigrationsHistory";
 
+    /// <summary>
+    /// Provides tables.
+    /// </summary>
     public static class Tables
     {
+        /// <summary>
+        /// The languages constant.
+        /// </summary>
         public const string Languages = "Languages";
+        /// <summary>
+        /// The localizable strings constant.
+        /// </summary>
         public const string LocalizableStrings = "LocalizableStrings";
+        /// <summary>
+        /// The localizable properties constant.
+        /// </summary>
         public const string LocalizableProperties = "LocalizableProperties";
     }
 
+    /// <summary>
+    /// Provides max lengths.
+    /// </summary>
     public static class MaxLengths
     {
+        /// <summary>
+        /// The scope identifier constant.
+        /// </summary>
         public const int ScopeId = 64;
+        /// <summary>
+        /// The culture code constant.
+        /// </summary>
         public const int CultureCode = 32;
+        /// <summary>
+        /// The name constant.
+        /// </summary>
         public const int Name = 255;
 
         /// <summary>
@@ -26,16 +53,40 @@ public static class Constants
         /// </summary>
         public const int TextKey = 400;
 
+        /// <summary>
+        /// The entity type constant.
+        /// </summary>
         public const int EntityType = 256;
+        /// <summary>
+        /// The entity identifier constant.
+        /// </summary>
         public const int EntityId = 64;
+        /// <summary>
+        /// The property constant.
+        /// </summary>
         public const int Property = 128;
     }
 
+    /// <summary>
+    /// Provides database providers.
+    /// </summary>
     public static class DatabaseProviders
     {
+        /// <summary>
+        /// The my SQL constant.
+        /// </summary>
         public const string MySql = "MySql";
+        /// <summary>
+        /// The npgsql constant.
+        /// </summary>
         public const string Npgsql = "Npgsql";
+        /// <summary>
+        /// The sqlite constant.
+        /// </summary>
         public const string Sqlite = "Sqlite";
+        /// <summary>
+        /// The SQL server constant.
+        /// </summary>
         public const string SqlServer = "SqlServer";
     }
 }

@@ -13,6 +13,9 @@ using Microsoft.Extensions.Localization;
 
 namespace Localize;
 
+/// <summary>
+/// Provides extension methods for service collections.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
     extension(IServiceCollection services)

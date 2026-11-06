@@ -7,10 +7,22 @@ public sealed class ResxLocalizationSource(
     IEnumerable<ResxResource> resources,
     ILogger<ResxLocalizationSource> logger) : ILocalizationSource
 {
+    /// <summary>
+    /// Gets the name.
+    /// </summary>
     public string Name => "Resx";
 
+    /// <summary>
+    /// Gets the priority.
+    /// </summary>
     public int Priority => SourcePriority.Resx;
 
+    /// <summary>
+    /// Gets the all.
+    /// </summary>
+    /// <param name="scopeId">The scope identifier.</param>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <returns>The all.</returns>
     public IReadOnlyDictionary<string, string> GetAll(string scopeId, string cultureCode)
     {
         var merged = new Dictionary<string, string>(StringComparer.Ordinal);

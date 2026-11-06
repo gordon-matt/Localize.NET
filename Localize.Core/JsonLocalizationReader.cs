@@ -7,6 +7,14 @@ namespace Localize;
 /// </summary>
 public static class JsonLocalizationReader
 {
+    /// <summary>
+    /// Attempts to read.
+    /// </summary>
+    /// <param name="json">The JSON.</param>
+    /// <param name="cultureCode">When this method returns, contains the culture code.</param>
+    /// <param name="strings">When this method returns, contains the strings.</param>
+    /// <param name="error">When this method returns, contains the error.</param>
+    /// <returns>true when the condition is met; otherwise, false.</returns>
     public static bool TryRead(
         string json,
         out string? cultureCode,
@@ -81,6 +89,12 @@ public static class JsonLocalizationReader
         return null;
     }
 
+    /// <summary>
+    /// Gets the flatten.
+    /// </summary>
+    /// <param name="element">The element.</param>
+    /// <param name="prefix">The prefix.</param>
+    /// <returns>The flatten.</returns>
     public static Dictionary<string, string> Flatten(JsonElement element, string? prefix)
     {
         var result = new Dictionary<string, string>(StringComparer.Ordinal);

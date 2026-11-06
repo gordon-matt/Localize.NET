@@ -2,23 +2,44 @@ using Microsoft.AspNetCore.Components.Forms;
 
 namespace Localize.Components.Pages;
 
+/// <summary>
+/// Represents the languages.
+/// </summary>
 public partial class Languages
 {
+    /// <summary>
+    /// Gets or sets the language service.
+    /// </summary>
     [Inject]
     public ILanguageService LanguageService { get; set; } = default!;
 
+    /// <summary>
+    /// Gets or sets the strings.
+    /// </summary>
     [Inject]
     public ILocalizableStringService Strings { get; set; } = default!;
 
+    /// <summary>
+    /// Gets or sets the options.
+    /// </summary>
     [Inject]
     public IOptions<LocalizeOptions> Options { get; set; } = default!;
 
+    /// <summary>
+    /// Gets or sets the services.
+    /// </summary>
     [Inject]
     public IServiceProvider Services { get; set; } = default!;
 
+    /// <summary>
+    /// Gets or sets the toasts.
+    /// </summary>
     [Inject]
     public ToastService Toasts { get; set; } = default!;
 
+    /// <summary>
+    /// Gets or sets the dialogs.
+    /// </summary>
     [Inject]
     public DialogService Dialogs { get; set; } = default!;
 
@@ -32,6 +53,7 @@ public partial class Languages
     private bool editing;
     private bool busy;
 
+    /// <inheritdoc/>
     protected override async Task OnInitializedAsync()
     {
         if (!await LocalizeAccess.AllowAsync(Options.Value, Services))

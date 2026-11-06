@@ -1,5 +1,8 @@
 namespace Localize.Strings;
 
+/// <summary>
+/// Represents the localizable string service.
+/// </summary>
 public sealed class LocalizableStringService(
     IRepository<LocalizableString> strings,
     IRepository<Language> languages,
@@ -10,6 +13,13 @@ public sealed class LocalizableStringService(
     IServiceScopeFactory scopes,
     ILogger<LocalizableStringService> logger) : ILocalizableStringService
 {
+    /// <summary>
+    /// Lists the comparative.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <param name="search">The search.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the comparative strings.</returns>
     public async Task<Result<IReadOnlyList<ComparativeString>>> ListComparativeAsync(
         string? cultureCode,
         string? search,
@@ -60,6 +70,14 @@ public sealed class LocalizableStringService(
         return Result<IReadOnlyList<ComparativeString>>.Success(items.ToArray());
     }
 
+    /// <summary>
+    /// Saves the value.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <param name="key">The key.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the result.</returns>
     public async Task<Result> SaveAsync(
         string? cultureCode,
         string key,
@@ -117,6 +135,13 @@ public sealed class LocalizableStringService(
         return Result.Success();
     }
 
+    /// <summary>
+    /// Deletes the value.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <param name="key">The key.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the result.</returns>
     public async Task<Result> DeleteAsync(string? cultureCode, string key, CancellationToken cancellationToken = default)
     {
         string current = CurrentScope();
@@ -132,6 +157,12 @@ public sealed class LocalizableStringService(
         return Result.Success();
     }
 
+    /// <summary>
+    /// Exports the value.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the language pack document.</returns>
     public async Task<Result<LanguagePackDocument>> ExportAsync(string? cultureCode, CancellationToken cancellationToken = default)
     {
         string current = CurrentScope();
@@ -156,6 +187,13 @@ public sealed class LocalizableStringService(
         return Result<LanguagePackDocument>.Success(document);
     }
 
+    /// <summary>
+    /// Imports the value.
+    /// </summary>
+    /// <param name="json">The JSON.</param>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the import result.</returns>
     public async Task<Result<ImportResult>> ImportAsync(
         string json,
         string? cultureCode = null,
@@ -243,6 +281,11 @@ public sealed class LocalizableStringService(
         return Result<ImportResult>.Success(new ImportResult(added, updated, skipped, languageCreated));
     }
 
+    /// <summary>
+    /// Resets to the packs.
+    /// </summary>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the int.</returns>
     public async Task<Result<int>> ResetToPacksAsync(CancellationToken cancellationToken = default)
     {
         string current = CurrentScope();

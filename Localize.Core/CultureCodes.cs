@@ -3,6 +3,9 @@ namespace Localize;
 /// <summary>Culture codes as Localize stores them. The invariant culture is an empty string, never null.</summary>
 public static class CultureCodes
 {
+    /// <summary>
+    /// The invariant constant.
+    /// </summary>
     public const string Invariant = "";
 
     /// <summary>Scope used when the host has a single tenant.</summary>
@@ -32,6 +35,11 @@ public static class CultureCodes
 
     private static CultureChoice ToChoice(CultureInfo culture) => new(culture.Name, culture.DisplayName);
 
+    /// <summary>
+    /// Normalizes the value.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <returns>The string.</returns>
     public static string Normalize(string? cultureCode)
     {
         if (string.IsNullOrWhiteSpace(cultureCode))
@@ -55,11 +63,26 @@ public static class CultureCodes
         }
     }
 
+    /// <summary>
+    /// Normalizes the scope.
+    /// </summary>
+    /// <param name="scopeId">The scope identifier.</param>
+    /// <returns>The scope.</returns>
     public static string NormalizeScope(string? scopeId) =>
         string.IsNullOrWhiteSpace(scopeId) ? GlobalScope : scopeId.Trim();
 
+    /// <summary>
+    /// Determines whether this instance is invariant.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <returns>true when the condition is met; otherwise, false.</returns>
     public static bool IsInvariant(string? cultureCode) => Normalize(cultureCode).Length == 0;
 
+    /// <summary>
+    /// Determines whether this instance is known.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <returns>true when the condition is met; otherwise, false.</returns>
     public static bool IsKnown(string? cultureCode)
     {
         if (string.IsNullOrWhiteSpace(cultureCode))
@@ -78,6 +101,11 @@ public static class CultureCodes
         }
     }
 
+    /// <summary>
+    /// Gets the display name.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <returns>The display name.</returns>
     public static string DisplayName(string cultureCode)
     {
         try
@@ -135,6 +163,11 @@ public static class CultureCodes
         }
     }
 
+    /// <summary>
+    /// Determines whether this instance is right to left.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <returns>true when the condition is met; otherwise, false.</returns>
     public static bool IsRightToLeft(string cultureCode)
     {
         try

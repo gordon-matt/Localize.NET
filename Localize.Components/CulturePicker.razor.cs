@@ -10,9 +10,15 @@ public partial class CulturePicker
     private IReadOnlyList<CultureChoice> regions = [];
     private bool isUnlisted;
 
+    /// <summary>
+    /// Gets or sets the value.
+    /// </summary>
     [Parameter]
     public string? Value { get; set; }
 
+    /// <summary>
+    /// Gets or sets the value changed.
+    /// </summary>
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
 
@@ -20,6 +26,9 @@ public partial class CulturePicker
     [Parameter]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is disabled.
+    /// </summary>
     [Parameter]
     public bool Disabled { get; set; }
 
@@ -27,6 +36,7 @@ public partial class CulturePicker
     [Parameter]
     public string Placeholder { get; set; } = "Choose a language";
 
+    /// <inheritdoc/>
     protected override void OnParametersSet()
     {
         string? root = CultureCodes.RootNeutral(Value);

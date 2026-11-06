@@ -18,16 +18,31 @@ public sealed class JsonLocalizationSource(
 
     private Dictionary<string, Dictionary<string, string>>? cached;
 
+    /// <summary>
+    /// Gets the name.
+    /// </summary>
     public string Name => "Json";
 
+    /// <summary>
+    /// Gets the priority.
+    /// </summary>
     public int Priority => options.Value.JsonOverridesDatabase ? SourcePriority.JsonOverride : SourcePriority.Json;
 
+    /// <summary>
+    /// Gets the all.
+    /// </summary>
+    /// <param name="scopeId">The scope identifier.</param>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <returns>The all.</returns>
     public IReadOnlyDictionary<string, string> GetAll(string scopeId, string cultureCode)
     {
         var all = Load();
         return all.TryGetValue(cultureCode, out var entries) ? entries : Empty;
     }
 
+    /// <summary>
+    /// Clears the value.
+    /// </summary>
     public void Clear()
     {
         lock (gate)
@@ -36,6 +51,10 @@ public sealed class JsonLocalizationSource(
         }
     }
 
+    /// <summary>
+    /// Resolves the directory.
+    /// </summary>
+    /// <returns>The directory.</returns>
     public string? ResolveDirectory()
     {
         string? configured = options.Value.JsonDirectory;

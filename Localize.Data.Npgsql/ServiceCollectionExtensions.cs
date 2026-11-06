@@ -2,6 +2,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Localize.Data.Npgsql;
 
+/// <summary>
+/// Provides extension methods for service collections.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
     extension(IServiceCollection services)

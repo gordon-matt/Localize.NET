@@ -6,6 +6,9 @@ namespace Localize;
 /// </summary>
 public interface ILocalizationSource
 {
+    /// <summary>
+    /// Gets the name.
+    /// </summary>
     string Name { get; }
 
     /// <summary>Higher wins for the same key in the same culture.</summary>

@@ -9,8 +9,16 @@ namespace Localize;
 /// </summary>
 public static class LocalizeRuntime
 {
+    /// <summary>
+    /// Gets or sets the services.
+    /// </summary>
     public static IServiceProvider? Services { get; set; }
 
+    /// <summary>
+    /// Gets the string.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    /// <returns>The string.</returns>
     public static string GetString(string key)
     {
         if (string.IsNullOrEmpty(key))

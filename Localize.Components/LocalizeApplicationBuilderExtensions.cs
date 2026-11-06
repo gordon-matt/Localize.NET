@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Localization;
 
 namespace Localize.Components;
 
+/// <summary>
+/// Provides extension methods for localize application builders.
+/// </summary>
 public static class LocalizeApplicationBuilderExtensions
 {
     /// <summary>

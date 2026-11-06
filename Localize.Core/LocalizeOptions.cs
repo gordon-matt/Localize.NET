@@ -3,6 +3,9 @@ namespace Localize;
 /// <summary>Bound from the <c>Localize</c> configuration section. Every value has a default.</summary>
 public sealed class LocalizeOptions
 {
+    /// <summary>
+    /// The section name constant.
+    /// </summary>
     public const string SectionName = "Localize";
 
     /// <summary>Culture used when the visitor has not chosen one. Seeded as an enabled language.</summary>
@@ -26,11 +29,17 @@ public sealed class LocalizeOptions
     /// </summary>
     public string? JsonDirectory { get; set; }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is watch JSON files.
+    /// </summary>
     public bool WatchJsonFiles { get; set; } = true;
 
     /// <summary>A deployed JSON file wins over a database row. The default lets an editor override the file.</summary>
     public bool JsonOverridesDatabase { get; set; }
 
+    /// <summary>
+    /// Gets or sets the cache minutes.
+    /// </summary>
     public int CacheMinutes { get; set; } = 30;
 
     /// <summary>Apply this library's migrations when the host starts.</summary>

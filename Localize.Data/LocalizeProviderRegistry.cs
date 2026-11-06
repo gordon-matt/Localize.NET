@@ -9,5 +9,8 @@ namespace Localize.Data;
 /// </summary>
 public static class LocalizeProviderRegistry
 {
+    /// <summary>
+    /// Gets or sets the attach.
+    /// </summary>
     public static Action<IServiceCollection>? Attach { get; set; }
 }

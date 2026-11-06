@@ -9,5 +9,8 @@ public interface ILanguagePack
     /// <summary>Null or empty for the invariant culture.</summary>
     string? CultureCode { get; }
 
+    /// <summary>
+    /// Gets the localized strings.
+    /// </summary>
     IDictionary<string, string> LocalizedStrings { get; }
 }

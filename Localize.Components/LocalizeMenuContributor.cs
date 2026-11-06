@@ -2,14 +2,31 @@ using Heroicsoft.NetForge.Components.Navigation;
 
 namespace Localize.Components;
 
+/// <summary>
+/// Represents the localize menu contributor.
+/// </summary>
 public sealed class LocalizeMenuContributor : INetForgeMenuContributor
 {
+    /// <summary>
+    /// The contributor name constant.
+    /// </summary>
     public const string ContributorName = "Localize";
 
+    /// <summary>
+    /// Gets the name.
+    /// </summary>
     public string Name => ContributorName;
 
+    /// <summary>
+    /// Gets the default menu.
+    /// </summary>
     public string DefaultMenu => "Settings";
 
+    /// <summary>
+    /// Performs the contribute operation.
+    /// </summary>
+    /// <param name="group">The group.</param>
+    /// <param name="configure">The configure.</param>
     public void Contribute(INetForgeMenuGroupBuilder group, Action<NetForgeMenuItemOptions>? configure)
     {
         group.AddCustom(item =>
@@ -24,6 +41,9 @@ public sealed class LocalizeMenuContributor : INetForgeMenuContributor
     }
 }
 
+/// <summary>
+/// Provides extension methods for localize menus.
+/// </summary>
 public static class LocalizeMenuExtensions
 {
     /// <summary>Adds the Languages link. The host can still retitle it.</summary>

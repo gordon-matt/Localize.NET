@@ -1,24 +1,45 @@
 namespace Localize.Components.Pages;
 
+/// <summary>
+/// Represents the strings.
+/// </summary>
 public partial class Strings
 {
     private static readonly int[] PageSizes = [25, 50, 100];
 
+    /// <summary>
+    /// Gets or sets the culture code.
+    /// </summary>
     [Parameter]
     public string? CultureCode { get; set; }
 
+    /// <summary>
+    /// Gets or sets the string service.
+    /// </summary>
     [Inject]
     public ILocalizableStringService StringService { get; set; } = default!;
 
+    /// <summary>
+    /// Gets or sets the options.
+    /// </summary>
     [Inject]
     public IOptions<LocalizeOptions> Options { get; set; } = default!;
 
+    /// <summary>
+    /// Gets or sets the services.
+    /// </summary>
     [Inject]
     public IServiceProvider Services { get; set; } = default!;
 
+    /// <summary>
+    /// Gets or sets the toasts.
+    /// </summary>
     [Inject]
     public ToastService Toasts { get; set; } = default!;
 
+    /// <summary>
+    /// Gets or sets the dialogs.
+    /// </summary>
     [Inject]
     public DialogService Dialogs { get; set; } = default!;
 
@@ -59,6 +80,7 @@ public partial class Strings
     private IEnumerable<ComparativeString> pageRows =>
         filtered.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
+    /// <inheritdoc/>
     protected override async Task OnParametersSetAsync()
     {
         if (!accessChecked)

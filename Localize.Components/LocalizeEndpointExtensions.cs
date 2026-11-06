@@ -8,6 +8,9 @@ using HttpResult = Microsoft.AspNetCore.Http.IResult;
 
 namespace Localize.Components;
 
+/// <summary>
+/// Provides extension methods for localize endpoints.
+/// </summary>
 public static class LocalizeEndpointExtensions
 {
     /// <summary>Maps the culture switch and the language-pack download.</summary>

@@ -6,5 +6,9 @@ namespace Localize;
 /// </summary>
 public interface ILocalizationScope
 {
+    /// <summary>
+    /// Gets the scope identifier.
+    /// </summary>
+    /// <returns>The scope identifier.</returns>
     string? GetScopeId();
 }

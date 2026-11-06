@@ -1,9 +1,21 @@
 namespace Localize.Properties;
 
+/// <summary>
+/// Represents the localizable property service.
+/// </summary>
 public sealed class LocalizablePropertyService(
     IRepository<LocalizableProperty> properties,
     ILocalizationScope scope) : ILocalizablePropertyService
 {
+    /// <summary>
+    /// Finds the one.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <param name="entityType">The entity type.</param>
+    /// <param name="entityId">The entity identifier.</param>
+    /// <param name="property">The property.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the localizable property.</returns>
     public async Task<Result<LocalizablePropertyModel>> FindOneAsync(
         string? cultureCode,
         string entityType,
@@ -28,6 +40,15 @@ public sealed class LocalizablePropertyService(
             : Result<LocalizablePropertyModel>.Success(ToModel(entity));
     }
 
+    /// <summary>
+    /// Finds the value.
+    /// </summary>
+    /// <param name="cultureCode">The culture code.</param>
+    /// <param name="entityType">The entity type.</param>
+    /// <param name="entityIds">The entity ids.</param>
+    /// <param name="property">The property.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the localizable properties.</returns>
     public async Task<Result<IReadOnlyList<LocalizablePropertyModel>>> FindAsync(
         string? cultureCode,
         string entityType,
@@ -56,6 +77,12 @@ public sealed class LocalizablePropertyService(
         return Result<IReadOnlyList<LocalizablePropertyModel>>.Success(page.Select(ToModel).ToArray());
     }
 
+    /// <summary>
+    /// Saves the value.
+    /// </summary>
+    /// <param name="form">The form.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result is the outcome for the localizable property.</returns>
     public async Task<Result<LocalizablePropertyModel>> SaveAsync(
         LocalizablePropertyForm form,
         CancellationToken cancellationToken = default)
@@ -137,6 +164,13 @@ public sealed class LocalizablePropertyService(
         return Result<LocalizablePropertyModel>.Success(ToModel(existing));
     }
 
+    /// <summary>
+    /// Deletes for the entity.
+    /// </summary>
+    /// <param name="entityType">The entity type.</param>
+    /// <param name="entityId">The entity identifier.</param>
+    /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the result.</returns>
     public async Task<Result> DeleteForEntityAsync(
         string entityType,
         string entityId,

@@ -5,6 +5,7 @@ namespace Localize.Components;
 /// <summary>Reads the culture cookie named in <see cref="LocalizeOptions.CultureCookieName"/>.</summary>
 public sealed class LocalizeCookieCultureProvider : RequestCultureProvider
 {
+    /// <inheritdoc/>
     public override Task<ProviderCultureResult?> DetermineProviderCultureResult(HttpContext httpContext)
     {
         var options = httpContext.RequestServices.GetRequiredService<IOptions<LocalizeOptions>>().Value;

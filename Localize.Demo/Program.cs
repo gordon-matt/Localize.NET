@@ -55,6 +55,7 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 app.MapStaticAssets();
+app.MapNetForgeAssets();
 app.UseLocalize();
 app.UseAntiforgery();
 app.MapLocalize();

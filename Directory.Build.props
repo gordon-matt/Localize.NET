@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<LangVersion>latest</LangVersion>
-		<Version>1.0.3</Version>
+		<Version>1.0.4</Version>
 		<Authors>Matt Gordon</Authors>
 		<Company>Matt Gordon</Company>
 		<Product>Localize</Product>
@@ -25,7 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
+		<PackageReference Include="System.Security.Cryptography.Pkcs" />
 	</ItemGroup>
 
 	<!-- Missing XML documentation on the public API is a build error. Tests, demos, samples, and templates are exempt. -->

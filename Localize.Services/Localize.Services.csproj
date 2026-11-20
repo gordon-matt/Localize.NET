@@ -8,13 +8,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Ardalis.Result" Version="10.1.0" />
-		<PackageReference Include="Heroicsoft.NetForge.Results" Version="1.2.6" />
-		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.14" />
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.14" />
-		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="10.0.14" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.14" />
-		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.14" />
+		<PackageReference Include="Ardalis.Result" />
+		<PackageReference Include="Heroicsoft.NetForge.Results" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
 	</ItemGroup>
 
 	<ItemGroup>
